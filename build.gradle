@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.3'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'checkstyle'
+	id 'com.diffplug.spotless' version '6.25.0' // Add this line
 }
 
 group = 'com.company'
@@ -26,6 +28,28 @@ dependencies {
 
 	testImplementation "org.testcontainers:testcontainers:1.21.3"
 	testImplementation "org.testcontainers:junit-jupiter:1.21.3"
+	testImplementation "org.testcontainers:mongodb:1.21.3"
+
+	// MapStruct dependencies
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+	// Lombok dependencies
+	implementation 'org.projectlombok:lombok:1.18.32'
+	annotationProcessor 'org.projectlombok:lombok:1.18.32'
+	testImplementation 'org.projectlombok:lombok:1.18.32'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+}
+
+checkstyle {
+	toolVersion = '10.17.0'
+	configFile = rootProject.file('config/checkstyle/google_checks.xml')
+}
+
+spotless {
+	java {
+		googleJavaFormat('1.22.0') // Use Google Java Format
+	}
 }
 
 tasks.named('test') {
